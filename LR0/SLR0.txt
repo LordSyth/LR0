@@ -1,0 +1,52 @@
+E->E+T
+E->T
+F->i
+F->(E)
+T->T*F
+T->F
+FIRST(+) : { + }
+FIRST()) : { ) }
+FIRST(i) : { i }
+FIRST(() : { ( }
+FIRST(*) : { * }
+FIRST(E) : { i, ( }
+FIRST(F) : { i, ( }
+FIRST(T) : { i, ( }
+FOLLOW(+) : { i, ( }
+FOLLOW()) : { *, $, +, ) }
+FOLLOW(i) : { *, $, +, ) }
+FOLLOW(() : { i, ( }
+FOLLOW(*) : { i, ( }
+FOLLOW(E) : { $, +, ) }
+FOLLOW(F) : { *, $, +, ) }
+FOLLOW(T) : { *, $, +, ) }
+CLOSURE(E->.E+T): { E->.E+T, E->.T, F->.i, F->.(E), T->.T*F, T->.F } check
+CLOSURE(E->E.+T): { E->E.+T } check
+CLOSURE(E->E+.T): { E->E+.T, F->.i, F->.(E), T->.T*F, T->.F } check
+CLOSURE(E->E+T.): { E->E+T. } check
+CLOSURE(E->.T): { E->.T, F->.i, F->.(E), T->.T*F, T->.F }
+CLOSURE(E->T.): { E->T. }
+CLOSURE(F->.i): { F->.i }
+CLOSURE(F->i.): { F->i. }
+CLOSURE(F->.(E)): { F->.(E) }
+CLOSURE(F->(.E)): { E->.E+T, E->.T, F->(.E), F->.i, F->.(E), T->.T*F, T->.F }
+CLOSURE(F->(E.)): { F->(E.) }
+CLOSURE(F->(E).): { F->(E). }
+CLOSURE(T->.T*F): { F->.i, F->.(E), T->.T*F, T->.F }
+CLOSURE(T->T.*F): { T->T.*F }
+CLOSURE(T->T*.F): { F->.i, F->.(E), T->T*.F }
+CLOSURE(T->T*F.): { T->T*F. }
+CLOSURE(T->.F): { F->.i, F->.(E), T->.F }
+CLOSURE(T->F.): { T->F. }
+GOTO(E->.E+T, E): { E->E.+T, E->E+.T, E->E+T., F->.i, F->.(E), T->.T*F, T->.F }
+GOTO(E->E.+T, +): { E->E.+T, E->E+.T, E->E+T., F->.i, F->.(E), T->.T*F, T->.F }
+GOTO(E->E+.T, T): { E->E.+T, E->E+.T, E->E+T., F->.i, F->.(E), T->.T*F, T->.F }
+GOTO(E->.T, T): { E->T. }
+GOTO(F->.i, i): { F->i. }
+GOTO(F->.(E), (): { E->.E+T, E->.T, F->(.E), F->(E.), F->(E)., F->.i, F->.(E), T->.T*F, T->.F }
+GOTO(F->(.E), E): { E->.E+T, E->.T, F->(.E), F->(E.), F->(E)., F->.i, F->.(E), T->.T*F, T->.F }
+GOTO(F->(E.), )): { E->.E+T, E->.T, F->(.E), F->(E.), F->(E)., F->.i, F->.(E), T->.T*F, T->.F }
+GOTO(T->.T*F, T): { F->.i, F->.(E), T->T.*F, T->T*.F, T->T*F. }
+GOTO(T->T.*F, *): { F->.i, F->.(E), T->T.*F, T->T*.F, T->T*F. }
+GOTO(T->T*.F, F): { F->.i, F->.(E), T->T.*F, T->T*.F, T->T*F. }
+GOTO(T->.F, F): { T->F. }
